@@ -1,21 +1,38 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React from 'react';
+import Axios from 'axios';
 import './App.css';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
+class App extends React.Component {
+
+    constructor(props){
+        super(props);
+
+        this.state = {
+            products: [],
+            currency: "",
+            hasError: false
+        };
+    }
+
+    componentDidMount(){
+        Axios.get("/products.json")
+        .then(response => {
+            this.setState({ 
+                products: response.data.products, 
+                currency: response.data.currency
+            });
+        }).catch(err => {
+            this.setState({ hasError: true });
+        });
+    }
+
+    render() {
+        if (this.state.hasError) return <h1>an error occured</h1>;
+
+        return (
+            <h1>Hello</h1>
+        );
+    }
 }
 
 export default App;
