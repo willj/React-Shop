@@ -1,0 +1,221 @@
+{
+    "currency": "£",
+    "products": [
+        {
+            "slug": "banoffee-bar",
+            "title": "Banoffee Bar",
+            "desc": "Chunky Belgian milk chocolate with toffee, banana and caramel curls",
+            "image": "100gBanoffee.jpg",
+            "currency": "£",
+            "variants": [
+                { "id": "banoffee-bar-100", "price": "3.95", "name": "100g Boxed", "image": "100gBanoffee.jpg" },
+                { "id": "banoffee-bar-40", "price": "1.75", "name": "40g", "image": "40gBanoffee.jpg" }
+            ],
+            "categories": [
+                "milk",
+                "bars"
+            ]
+        },
+        {
+            "slug": "black-forest-bar",
+            "title": "Black Forest Bar",
+            "desc": "Dark chocolate and cherry slab, topped with cherry and white chocolate flakes",
+            "image": "100gBlackforest.jpg",
+            "currency": "£",
+            "variants": [
+                { "id": "black-forest-bar-100", "price": "3.95", "name": "100g Boxed", "image": "100gBlackforest.jpg" },
+                { "id": "black-forest-bar-40", "price": "1.75", "name": "40g", "image": "40gBlackForest.jpg" }
+            ],
+            "categories": [
+                "dark",
+                "bars"
+            ]
+        },
+        {
+            "slug": "eton-mess-bar",
+            "title": "Eton Mess Bar",
+            "desc": "Chunky white chocolate with vanilla, meringue and strawberry pieces",
+            "image": "100gEtonMess.jpg",
+            "currency": "£",
+            "variants": [
+                { "id": "black-forest-bar-100", "price": "3.95", "name": "100g Boxed", "image": "100gEtonMess.jpg" },
+                { "id": "black-forest-bar-40", "price": "1.75", "name": "40g", "image": "40gEtonMess.jpg" }
+            ],
+            "categories": [
+                "white",
+                "bars"
+            ]
+        },
+        {
+            "slug": "salted-caramel",
+            "title": "Salted Caramel",
+            "desc": "Milk chocolate and soft caramel filling with sea salt",
+            "image": "SaltedCaramelDouble.jpg",
+            "currency": "£",
+            "variants": [
+                { "id": "salted-caramel-6", "price": "5.95", "name": "Box of 6" },
+                { "id": "salted-caramel-12", "price": "9.95", "name": "Box of 12" }
+            ],
+            "categories": [
+                "milk"
+            ]
+        },
+        {
+            "slug": "lemon-meringue",
+            "title": "Lemon Meringue",
+            "desc": "White chocolate and zesty lemon with crunchy meringue",
+            "image": "Lemon.jpg",
+            "currency": "£",
+            "variants": [
+                { "id": "lemon-meringue-6", "price": "5.95", "name": "Box of 6" }
+            ],
+            "categories": [
+                "white"
+            ]
+        },
+        {
+            "slug": "raspberry-pavlova",
+            "title": "Raspberry Pavlova",
+            "desc": "Dark chocolate cup with a dark chocolate and raspberry ganache, topped with white chocolate, raspberry and meringue",
+            "image": "RaspberryPavlova.jpg",
+            "currency": "£",
+            "variants": [
+                { "id": "raspberry-pavlova-6", "price": "5.95", "name": "Box of 6" },
+                { "id": "raspberry-pavlova-12", "price": "9.95", "name": "Box of 12" }
+            ],
+            "categories": [
+                "dark"
+            ]
+        },
+        {
+            "slug": "cherry-heart",
+            "title": "Cherry Heart",
+            "desc": "Dark chocolate with a dark chocolate and cherry centre",
+            "image": "DarkHeart.jpg",
+            "currency": "£",
+            "variants": [
+                { "id": "cherry-heart-6", "price": "5.95", "name": "Box of 6" },
+                { "id": "cherry-heart-12", "price": "9.95", "name": "Box of 12" }
+            ],
+            "categories": [
+                "dark"
+            ]
+        },
+        {
+            "slug": "milk-heart",
+            "title": "Milk Heart",
+            "desc": "Milk chocolate hearts with a creamy milk chocolate centre",
+            "image": "MilkHeart.jpg",
+            "currency": "£",
+            "variants": [
+                { "id": "milk-heart-6", "price": "5.95", "name": "Box of 6" },
+                { "id": "milk-heart-12", "price": "9.95", "name": "Box of 12" }
+            ],
+            "categories": [
+                "milk"
+            ]
+        },
+        {
+            "slug": "lime",
+            "title": "Lime",
+            "desc": "Dark chocolate shell with lime and milk chocolate centre",
+            "image": "LimeLightDouble.jpg",
+            "currency": "£",
+            "variants": [
+                { "id": "lime-6", "price": "5.95", "name": "Box of 6" },
+                { "id": "lime-12", "price": "9.95", "name": "Box of 12" }
+            ],
+            "categories": [
+                "dark"
+            ]
+        },
+        {
+            "slug": "rose",
+            "title": "Rose",
+            "desc": "Dark chocolate with rose",
+            "image": "RoseRedTriple.jpg",
+            "currency": "£",
+            "variants": [
+                { "id": "rose-6", "price": "5.95", "name": "Box of 6" },
+                { "id": "rose-12", "price": "9.95", "name": "Box of 12" }
+            ],
+            "categories": [
+                "dark"
+            ]
+        },
+        {
+            "slug": "milk-chocolate-truffle",
+            "title": "Milk Chocolate Truffle",
+            "desc": "Milk chocolate truffle, dipped in milk chocolate and spun with white chocolate",
+            "image": "TruffleDouble.jpg",
+            "currency": "£",
+            "variants": [
+                { "id": "milk-chocolate-truffle-6", "price": "5.95", "name": "Box of 6" },
+                { "id": "milk-chocolate-truffle-12", "price": "9.95", "name": "Box of 12" }
+            ],
+            "categories": [
+                "milk",
+                "truffles"
+            ]
+        },
+        {
+            "slug": "cinnamon-truffle",
+            "title": "Cinnamon Truffle",
+            "desc": "Milk chocolate and cinnamon truffle centre, coated in milk chocolate and spun with dark",
+            "image": "TruffleCinamon.jpg",
+            "currency": "£",
+            "variants": [
+                { "id": "cinnamon-truffle-6", "price": "5.95", "name": "Box of 6" },
+                { "id": "cinnamon-truffle-12", "price": "9.95", "name": "Box of 12" }
+            ],
+            "categories": [
+                "milk",
+                "truffles"
+            ]
+        },
+        {
+            "slug": "ginger-and-orange-truffle",
+            "title": "Ginger and Orange Truffle",
+            "desc": "Dark chocolate and ginger truffle centre, dipped in dark chocolate, and topped with orange peel",
+            "image": "TruffleOrangeGinger.jpg",
+            "currency": "£",
+            "variants": [
+                { "id": "ginger-and-orange-truffle-6", "price": "5.95", "name": "Box of 6" },
+                { "id": "ginger-and-orange-truffle-12", "price": "9.95", "name": "Box of 12" }
+            ],
+            "categories": [
+                "dark",
+                "truffles"
+            ]
+        },
+        {
+            "slug": "raspberry-and-almond-truffle",
+            "title": "Raspberry and Almond Truffle",
+            "desc": "Dark chocolate and raspberry truffle, coated in dark chocolate, raspberry and crushed almond",
+            "image": "TruffleRaspberryNuts.jpg",
+            "currency": "£",
+            "variants": [
+                { "id": "raspberry-and-almond-truffle-6", "price": "5.95", "name": "Box of 6" },
+                { "id": "raspberry-and-almond-truffle-12", "price": "9.95", "name": "Box of 12" }
+            ],
+            "categories": [
+                "dark",
+                "truffles"
+            ]
+        },
+        {
+            "slug": "orange-praline",
+            "title": "Orange Praline",
+            "desc": "Orange and almond praline in milk chocolate",
+            "image": "OrangePraline.jpg",
+            "currency": "£",
+            "variants": [
+                { "id": "orange-praline-6", "price": "5.95", "name": "Box of 6" },
+                { "id": "orange-praline-12", "price": "9.95", "name": "Box of 12" }
+            ],
+            "categories": [
+                "milk"
+            ]
+        }
+    ]
+}
