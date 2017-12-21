@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Product from '../Product/Product';
 
 class Shop extends React.Component{
 
@@ -62,7 +63,7 @@ class Shop extends React.Component{
                 <h1>shop</h1>
 
                 {this.props.products.map(
-                    (p, i) => <li key={i}>{p.title}</li>)}
+                    (product, i) => <Product product={product} addToCart={this.addToCart} key={i} />)}
 
             </div>
         );
