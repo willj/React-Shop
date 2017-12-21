@@ -1,5 +1,7 @@
 import React from 'react';
 import Axios from 'axios';
+import Shop from './components/Shop/Shop';
+
 import './App.css';
 
 class App extends React.Component {
@@ -30,7 +32,7 @@ class App extends React.Component {
         if (this.state.hasError) return <h1>an error occured</h1>;
 
         return (
-            <h1>Hello</h1>
+            <Shop products={this.state.products} currency={this.state.currency} />
         );
     }
 }
