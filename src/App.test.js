@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { shallow } from 'enzyme';
 
 // Mock remote calls
@@ -28,11 +27,6 @@ describe('<App />', () => {
                 });
             });
         });
-    });
-
-    it('renders without crashing', () => {
-        const div = document.createElement('div');
-        ReactDOM.render(<App />, div);
     });
 
     it('calls componentDidMount and sets product state with an ajax call', () => {
