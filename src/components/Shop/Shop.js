@@ -30,6 +30,15 @@ class Shop extends React.Component{
         });
     }
 
+    removeFromCart(variantId){
+        this.setState((prevState, props) => {
+            let cart = Object.assign({}, prevState.cartItems);
+            delete cart[variantId];
+
+            return { cartItems: cart };
+        });
+    }
+
     render(){
         return (
             <div>

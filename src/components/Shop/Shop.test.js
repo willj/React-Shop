@@ -66,4 +66,39 @@ describe('<Shop />', () => {
 
     });
 
+    describe('removeFromCart', () => {
+        
+        it('removes an item from the cart', () => {
+            const wrapper = shallow(<Shop products={[]} currency="£" />);
+
+            wrapper.instance().addToCart(productVariantToAdd1);
+            wrapper.instance().addToCart(productVariantToAdd2);            
+
+            expect(Object.keys(wrapper.state().cartItems).length).toBe(2);
+            expect(wrapper.state().cartItems).toHaveProperty('test-product-v1');
+            expect(wrapper.state().cartItems).toHaveProperty('test-product-v2');
+
+            wrapper.instance().removeFromCart(productVariantToAdd1.variant.id);
+
+            expect(Object.keys(wrapper.state().cartItems).length).toBe(1);
+            expect(wrapper.state().cartItems).toHaveProperty('test-product-v2');
+            expect(wrapper.state().cartItems).not.toHaveProperty('test-product-v1');
+        });
+
+        it('does not remove from the cart if no match', () => {
+            const wrapper = shallow(<Shop products={[]} currency="£" />);
+
+            wrapper.instance().addToCart(productVariantToAdd1);         
+
+            expect(Object.keys(wrapper.state().cartItems).length).toBe(1);
+            expect(wrapper.state().cartItems).toHaveProperty('test-product-v1');
+
+            wrapper.instance().removeFromCart(productVariantToAdd2.variant.id);
+
+            expect(Object.keys(wrapper.state().cartItems).length).toBe(1);
+            expect(wrapper.state().cartItems).toHaveProperty('test-product-v1');
+        });
+
+    });
+
 });
