@@ -11,6 +11,8 @@ class Shop extends React.Component{
         }
 
         this.addToCart = this.addToCart.bind(this);
+        this.removeFromCart = this.removeFromCart.bind(this);
+        this.updateCartQuantity = this.updateCartQuantity.bind(this);
     }
 
     addToCart(product){
