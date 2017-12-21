@@ -101,4 +101,67 @@ describe('<Shop />', () => {
 
     });
 
+    describe('updateCartQuantity', () => {
+
+        it('sets the quantity of a cartItem', () => {
+            const wrapper = shallow(<Shop products={[]} currency="£" />);
+
+            wrapper.instance().addToCart(productVariantToAdd1);         
+
+            expect(Object.keys(wrapper.state().cartItems).length).toBe(1);
+            expect(wrapper.state().cartItems).toHaveProperty('test-product-v1');
+            expect(wrapper.state().cartItems['test-product-v1'].count).toBe(1);
+
+            wrapper.instance().updateCartQuantity('test-product-v1', 4);
+
+            expect(wrapper.state().cartItems['test-product-v1'].count).toBe(4);
+        });
+
+        it('removes the item when given a quantity of 0', () => {
+            const wrapper = shallow(<Shop products={[]} currency="£" />);
+
+            wrapper.instance().addToCart(productVariantToAdd1);         
+
+            expect(Object.keys(wrapper.state().cartItems).length).toBe(1);
+            expect(wrapper.state().cartItems).toHaveProperty('test-product-v1');
+            expect(wrapper.state().cartItems['test-product-v1'].count).toBe(1);
+
+            wrapper.instance().updateCartQuantity('test-product-v1', 0);
+
+            expect(Object.keys(wrapper.state().cartItems).length).toBe(0);
+            expect(wrapper.state().cartItems).not.toHaveProperty('test-product-v1');
+
+        });
+
+        it('removes the item when given a quantity of -1', () => {
+            const wrapper = shallow(<Shop products={[]} currency="£" />);
+
+            wrapper.instance().addToCart(productVariantToAdd1);         
+
+            expect(Object.keys(wrapper.state().cartItems).length).toBe(1);
+            expect(wrapper.state().cartItems).toHaveProperty('test-product-v1');
+            expect(wrapper.state().cartItems['test-product-v1'].count).toBe(1);
+
+            wrapper.instance().updateCartQuantity('test-product-v1', -1);
+
+            expect(Object.keys(wrapper.state().cartItems).length).toBe(0);
+            expect(wrapper.state().cartItems).not.toHaveProperty('test-product-v1');
+        });
+
+        it('has no effect when the variant is not in the cart', () => {
+            const wrapper = shallow(<Shop products={[]} currency="£" />);
+
+            wrapper.instance().addToCart(productVariantToAdd1);         
+
+            expect(Object.keys(wrapper.state().cartItems).length).toBe(1);
+            expect(wrapper.state().cartItems).toHaveProperty('test-product-v1');
+            
+            wrapper.instance().updateCartQuantity('test-product-v2', 4);
+
+            expect(Object.keys(wrapper.state().cartItems).length).toBe(1);
+            expect(wrapper.state().cartItems).not.toHaveProperty('test-product-v2');
+        });
+
+    });
+
 });

@@ -39,6 +39,21 @@ class Shop extends React.Component{
         });
     }
 
+    updateCartQuantity(variantId, newCount){
+
+        if (newCount < 1) return this.removeFromCart(variantId);
+
+        this.setState((prevState, props) => {
+            let cart = Object.assign({}, prevState.cartItems);
+            
+            if (cart[variantId]){
+                cart[variantId].count = newCount;
+            }
+
+            return { cartItems: cart };
+        });
+    }
+
     render(){
         return (
             <div>
