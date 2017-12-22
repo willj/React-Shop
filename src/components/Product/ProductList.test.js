@@ -35,16 +35,46 @@ describe('<ProductList />', () => {
                 "dark",
                 "bars"
             ]
+        },
+        {
+            "slug": "salted-caramel",
+            "title": "Salted Caramel",
+            "desc": "Milk chocolate and soft caramel filling with sea salt",
+            "image": "/images/SaltedCaramelDouble.jpg",
+            "currency": "£",
+            "variants": [
+                { "id": "salted-caramel-6", "price": "5.95", "name": "Box of 6" },
+                { "id": "salted-caramel-12", "price": "9.95", "name": "Box of 12" }
+            ],
+            "categories": [
+                "milk"
+            ]
         }
     ];
 
     const addToCart = () => null;
 
-    it('displays a <Product /> for each product', () => {
+    it('displays a <Product /> for each product when no category prop supplied', () => {
         const wrapper = shallow(<ProductList products={dummyProducts} addToCart={addToCart} />);
 
-        console.log(wrapper.find(Product));
+        expect(wrapper.find(Product).length).toBe(3);
+    });
+
+    it('displays only products in the category when a category supplied', () => {
+        const wrapper = shallow(<ProductList products={dummyProducts} 
+            addToCart={addToCart} category="milk" />);
+
         expect(wrapper.find(Product).length).toBe(2);
+        wrapper.find(Product).forEach(productWrapper => {
+            expect(productWrapper.props().product.categories).toContain('milk');
+        });
+    });
+
+    it('displays no products when an invalid category supplied', () => {
+        const wrapper = shallow(<ProductList products={dummyProducts} 
+            addToCart={addToCart} category="cheese" />);
+
+        expect(wrapper.find(Product).length).toBe(0);
     });
 
 });

@@ -1,22 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import ProductList from '../Product/ProductList';
 import Header from '../Header/Header';
 
+
 const ShopLayout = ({products, cartItems, addToCart}) => {
     return (
-        <div className="App">
-            <Header cartItems={cartItems} />
+        <BrowserRouter>
+            <div className="App">
+                <Header cartItems={cartItems} />
 
-            <main>
-                <h1>Shop</h1>
+                <main>
+                    <Switch>
+                        <Route exact path="/">
+                            <ProductList products={products} addToCart={addToCart} />
+                        </Route>
 
-                <ProductList products={products} addToCart={addToCart} />
+                        <Route path="/:category" render={({match}) => 
+                            <ProductList products={products} 
+                                addToCart={addToCart} category={match.params.category} /> } />
+                    </Switch>
+                </main>
 
-            </main>
-
-            <footer>footer</footer>
-        </div>
+                <footer>footer</footer>
+            </div>
+            </BrowserRouter>
     );
 };
 
