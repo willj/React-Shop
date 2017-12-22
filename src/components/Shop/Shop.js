@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Product from '../Product/Product';
+import ShopLayout from './ShopLayout';
 
 class Shop extends React.Component{
 
@@ -59,13 +59,8 @@ class Shop extends React.Component{
 
     render(){
         return (
-            <div>
-                <h1>shop</h1>
-
-                {this.props.products.map(
-                    (product, i) => <Product product={product} addToCart={this.addToCart} key={i} />)}
-
-            </div>
+            <ShopLayout products={this.props.products} 
+                cartItems={this.state.cartItems} addToCart={this.addToCart} />
         );
     }
 }
