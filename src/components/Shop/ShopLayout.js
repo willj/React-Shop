@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ProductList from '../Product/ProductList';
+import Header from '../Header/Header';
 
 const ShopLayout = ({products, cartItems, addToCart}) => {
     return (
         <div className="App">
-            <header>Shop header</header>
+            <Header cartItems={cartItems} />
 
             <main>
                 <h1>Shop</h1>
