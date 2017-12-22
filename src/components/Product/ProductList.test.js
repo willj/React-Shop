@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import ProductList from './ProductList';
-import Product from './Product';
+import ProductListItem from './ProductListItem';
 
 describe('<ProductList />', () => {
 
@@ -57,15 +57,15 @@ describe('<ProductList />', () => {
     it('displays a <Product /> for each product when no category prop supplied', () => {
         const wrapper = shallow(<ProductList products={dummyProducts} addToCart={addToCart} />);
 
-        expect(wrapper.find(Product).length).toBe(3);
+        expect(wrapper.find(ProductListItem).length).toBe(3);
     });
 
     it('displays only products in the category when a category supplied', () => {
         const wrapper = shallow(<ProductList products={dummyProducts} 
             addToCart={addToCart} category="milk" />);
 
-        expect(wrapper.find(Product).length).toBe(2);
-        wrapper.find(Product).forEach(productWrapper => {
+        expect(wrapper.find(ProductListItem).length).toBe(2);
+        wrapper.find(ProductListItem).forEach(productWrapper => {
             expect(productWrapper.props().product.categories).toContain('milk');
         });
     });
@@ -74,7 +74,7 @@ describe('<ProductList />', () => {
         const wrapper = shallow(<ProductList products={dummyProducts} 
             addToCart={addToCart} category="cheese" />);
 
-        expect(wrapper.find(Product).length).toBe(0);
+        expect(wrapper.find(ProductListItem).length).toBe(0);
     });
 
 });
