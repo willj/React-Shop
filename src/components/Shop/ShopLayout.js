@@ -10,7 +10,7 @@ const ShopLayout = ({products, cartItems, addToCart}) => {
     return (
         <BrowserRouter>
             <div className="App">
-                <Header cartItems={cartItems} />
+                <Header cartItems={cartItems} products={products} />
 
                 <main>
                     <Switch>
