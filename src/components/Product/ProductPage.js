@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Product from './Product';
-
-const FindProduct = (products, slug) => 
-    products.find(p => p.slug === slug);
+import { FindProduct } from './ProductHelpers';
 
 const ProductPage = ({match, products, addToCart}) => {
     return (products.length > 0) 
