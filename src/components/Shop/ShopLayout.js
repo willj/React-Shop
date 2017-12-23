@@ -4,9 +4,9 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import ProductList from '../Product/ProductList';
 import Header from '../Header/Header';
 import ProductPage from '../Product/ProductPage';
+import Checkout from '../Checkout/Checkout';
 
-
-const ShopLayout = ({products, cartItems, addToCart}) => {
+const ShopLayout = ({products, cartItems, currency, addToCart, removeFromCart, updateCartQuantity}) => {
     return (
         <BrowserRouter>
             <div className="App">
@@ -20,6 +20,11 @@ const ShopLayout = ({products, cartItems, addToCart}) => {
 
                         <Route path="/products/:slug" render={({match}) => 
                             <ProductPage products={products} addToCart={addToCart} match={match} />} />
+
+                        <Route path="/checkout">
+                            <Checkout products={products} cartItems={cartItems} currency={currency}
+                                removeFromCart={removeFromCart} updateCartQuantity={updateCartQuantity} />
+                        </Route>
 
                         <Route path="/:category" render={({match}) => 
                             <ProductList products={products} 
@@ -38,5 +43,8 @@ export default ShopLayout;
 ShopLayout.propTypes = {
     products: PropTypes.array.isRequired,
     cartItems: PropTypes.object.isRequired,
-    addToCart: PropTypes.func.isRequired
+    currency: PropTypes.string.isRequired,
+    addToCart: PropTypes.func.isRequired,
+    removeFromCart: PropTypes.func.isRequired,
+    updateCartQuantity: PropTypes.func.isRequired
 };

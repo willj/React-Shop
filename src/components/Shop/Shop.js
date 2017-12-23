@@ -60,7 +60,10 @@ class Shop extends React.Component{
     render(){
         return (
             <ShopLayout products={this.props.products} 
-                cartItems={this.state.cartItems} addToCart={this.addToCart} />
+                cartItems={this.state.cartItems} currency={this.props.currency} 
+                addToCart={this.addToCart}
+                removeFromCart={this.removeFromCart}
+                updateCartQuantity={this.updateCartQuantity} />
         );
     }
 }
