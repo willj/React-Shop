@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import './CartIcon.css';
 
 const CartIcon = ({cartItems}) => {
     let itemCount = Object.values(cartItems).reduce((accumulator, currentValue) => {
@@ -7,9 +9,10 @@ const CartIcon = ({cartItems}) => {
     }, 0);
 
     return (
-        <div>
-            Items in cart: 
-            {(itemCount > 0) && <span className="cart-item-count">{itemCount}</span>}
+        <div className="cart-icon">
+            <Link to='/checkout' className="cart-icon-link">
+                {(itemCount > 0) && <span className="cart-item-count">{itemCount}</span>}
+            </Link>
         </div>
     );
 };

@@ -1,0 +1,28 @@
+.app-header {
+    box-sizing: border-box;
+    width: 100%;
+    background-color: #333333;
+    color: #ffffff;
+    padding: 20px;
+}
+
+.app-title {
+    color: #c4e5df;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 3em;
+    margin: 0;
+}
+
+.app-header a {
+    color: #ffffff;
+}
+
+.app-header-menu {
+    padding: 15px;
+}
+
+.app-header-menu a {
+    margin: 5px;
+}
