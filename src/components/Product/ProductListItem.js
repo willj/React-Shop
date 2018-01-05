@@ -5,10 +5,14 @@ import { Link } from 'react-router-dom';
 
 const ProductListItem = ({product}) => {
     return (
-        <div>
-            <img src={product.image} alt={product.title} />
-            <Link to={`products/${product.slug}`}>{product.title}</Link>
-            <ProductPrice product={product} />
+        <div className="product-list-item">
+            <Link to={`products/${product.slug}`}> 
+                <img src={product.image} alt={product.title} />
+            
+                <p><ProductPrice product={product} /></p>
+            
+                <h3 className="product-list-item-title">{product.title}</h3>
+            </Link>
         </div>
     );
 }

@@ -31,8 +31,6 @@ const ShopLayout = ({products, cartItems, currency, addToCart, removeFromCart, u
                                 addToCart={addToCart} category={match.params.category} /> } />
                     </Switch>
                 </main>
-
-                <footer>footer</footer>
             </div>
             </BrowserRouter>
     );

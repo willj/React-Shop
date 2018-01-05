@@ -26,3 +26,15 @@
 .app-header-menu a {
     margin: 5px;
 }
+
+@media screen and (max-width: 570px) {
+    .app-title {
+        font-size: 2em;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .app-header {
+        padding-top: 60px;
+    }
+}

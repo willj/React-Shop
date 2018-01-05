@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ProductListItem from './ProductListItem';
+import './ProductList.css';
 
 const ProductList = ({products, addToCart, category}) => {
     const productList = products.filter((product) => {
@@ -8,7 +9,11 @@ const ProductList = ({products, addToCart, category}) => {
     }).map( (product,  index) => 
         <ProductListItem product={product} key={index} /> );
 
-    return <React.Fragment>{productList}</React.Fragment>;
+    return (
+        <div className="product-list">
+            {productList}
+        </div>
+    );
 };
 
 export default ProductList;
