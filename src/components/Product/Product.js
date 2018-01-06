@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './Product.css';
 
 class Product extends React.Component{
     constructor(props){
@@ -30,22 +31,26 @@ class Product extends React.Component{
         let variantImage = this.state.selectedVariant.image || product.image;
 
         return (
-            <div>
-                <h1>{product.title}</h1>
+            <div className="product">
+                <div className="product-image">
+                    <img src={variantImage} alt={product.title} />
+                </div>
 
-                <img src={variantImage} alt={product.title} />
+                <div className="product-info">
+                    <h1>{product.title}</h1>
 
-                <p className="display-price">{product.currency}{this.state.selectedVariant.price}</p>
-                <select onChange={this.setVariant}>
-                    { product.variants.map((variant, index) => {
-                        return <option key={index} value={variant.id}>{variant.name}</option>
-                    })}
-                </select>
-                <br />
-                <br />
-                <button className="add-to-cart-btn" onClick={this.addToCart}>Add to cart</button>
+                    <p className="display-price">{product.currency}{this.state.selectedVariant.price}</p>
 
-                <p>{product.desc}</p>
+                    <select className="variant-select" onChange={this.setVariant}>
+                        { product.variants.map((variant, index) => {
+                            return <option key={index} value={variant.id}>{variant.name}</option>
+                        })}
+                    </select>
+
+                    <button className="buy-button" onClick={this.addToCart}>Add to cart</button>
+
+                    <p>{product.desc}</p>
+                </div>
             </div>
         );
     }
