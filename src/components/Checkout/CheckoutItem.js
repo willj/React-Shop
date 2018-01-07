@@ -29,7 +29,7 @@ class CheckoutItem extends React.Component{
 
     render(){
         let {product, cartItem, removeFromCart} = this.props;
-        let variantImage = cartItem.variant.image || product.image;
+        let variantImage = process.env.PUBLIC_URL + (cartItem.variant.image || product.image);
 
         return(
             <div className="checkout-item">

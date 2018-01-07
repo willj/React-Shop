@@ -8,7 +8,7 @@ import Checkout from '../Checkout/Checkout';
 
 const ShopLayout = ({products, cartItems, currency, addToCart, removeFromCart, updateCartQuantity}) => {
     return (
-        <BrowserRouter>
+        <BrowserRouter basename={process.env.PUBLIC_URL}>
             <div className="App">
                 <Header cartItems={cartItems} products={products} />
 

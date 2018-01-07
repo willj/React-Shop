@@ -17,7 +17,7 @@ class App extends React.Component {
     }
 
     componentDidMount(){
-        Axios.get("/products.json")
+        Axios.get(process.env.PUBLIC_URL + "/products.json")
         .then(response => {
             this.setState({ 
                 products: response.data.products, 

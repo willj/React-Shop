@@ -7,7 +7,7 @@ const ProductListItem = ({product}) => {
     return (
         <div className="product-list-item">
             <Link to={`products/${product.slug}`}> 
-                <img src={product.image} alt={product.title} />
+                <img src={process.env.PUBLIC_URL + product.image} alt={product.title} />
             
                 <p><ProductPrice product={product} /></p>
             

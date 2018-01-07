@@ -28,7 +28,7 @@ class Product extends React.Component{
 
     render(){
         let {product} = this.props;
-        let variantImage = this.state.selectedVariant.image || product.image;
+        let variantImage = process.env.PUBLIC_URL + (this.state.selectedVariant.image || product.image);
 
         return (
             <section className="product">
