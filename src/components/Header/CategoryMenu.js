@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import './CategoryMenu.css';
 
 const CategoryMenu = ({products}) => {
@@ -13,9 +13,9 @@ const CategoryMenu = ({products}) => {
 
     return (
         <nav className="category-menu">
-            <Link to="/">All</Link>
+            <Link to="/">all</Link>
             { categories.map((cat, index) => 
-                <Link to={`/${cat}`} key={index}>{cat}</Link>) }
+                <NavLink to={`/${cat}`} key={index} activeClassName="active-link">{cat}</NavLink>) }
         </nav>
     );
 };

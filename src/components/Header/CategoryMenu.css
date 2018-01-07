@@ -1,3 +1,8 @@
 .category-menu a {
     margin: 5px;
+    color: #ffffff;
+}
+
+.category-menu a.active-link {
+    color: #0098a1;
 }

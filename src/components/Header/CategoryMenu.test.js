@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import CategoryMenu from './CategoryMenu';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 describe('<CategoryMenu />', () => {
 
@@ -28,19 +28,20 @@ describe('<CategoryMenu />', () => {
         }
     ];
 
-    it('displays a single link for each category plus a link for "all"', () => {
+    it('displays a single NavLink for each category plus a Link for "all"', () => {
         const wrapper = shallow(<CategoryMenu products={dummyProducts} />);
 
-        expect(wrapper.find(Link)).toHaveLength(5);
+        expect(wrapper.find(Link)).toHaveLength(1);
+        expect(wrapper.find(NavLink)).toHaveLength(4);
         
         let links = [];
-        // ensure the links are all unique
-        wrapper.find(Link).forEach( link => {
+        // ensure the category links (excluding 'all') are unique
+        wrapper.find(NavLink).forEach( link => {
             expect(links.includes(link.props().to)).toBe(false);
             links.push(link.props().to);
         });
 
-        expect(links.length).toBe(5);
+        expect(links.length).toBe(4);
     });
 
 });
