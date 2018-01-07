@@ -14,8 +14,8 @@ describe('<CheckoutItem />', () => {
             "image": "/images/100gBlackforest.jpg",
             "currency": "£",
             "variants": [
-                { "id": "black-forest-bar-100", "price": "3.95", "name": "100g Boxed", "image": "/images/100gBlackforest.jpg" },
-                { "id": "black-forest-bar-40", "price": "1.75", "name": "40g", "image": "/images/40gBlackForest.jpg" }
+                { "id": "black-forest-bar-100", "price": "3.95", "name": "100g Boxed", "image": "bf100g.jpg" },
+                { "id": "black-forest-bar-40", "price": "1.75", "name": "40g", "image": "bf40g.jpg" }
             ],
             "categories": [
                 "dark",
@@ -112,6 +112,25 @@ describe('<CheckoutItem />', () => {
         wrapper.find('.remove-from-cart-button').simulate('click');
 
         expect(removeFromCart).toHaveBeenLastCalledWith('salted-caramel-1');
+    });
+
+    it('shows the variant image if one exists', () => {
+        const wrapper = shallow(
+            <CheckoutItem cartItem={cartItems['black-forest-bar-40']} product={dummyProducts[0]}
+                currency="£" removeFromCart={nullFunc} updateCartQuantity={nullFunc} />  
+        );
+
+        expect(wrapper.find('img').props().src).toBe('bf40g.jpg');
+
+    });
+
+    it('shows the main product image when the variant has no image', () => {
+        const wrapper = shallow(
+            <CheckoutItem cartItem={cartItems['salted-caramel-1']} product={dummyProducts[1]}
+                currency="£" removeFromCart={nullFunc} updateCartQuantity={nullFunc} />  
+        );
+
+        expect(wrapper.find('img').props().src).toBe('/images/SaltedCaramelDouble.jpg');
     });
 
 });

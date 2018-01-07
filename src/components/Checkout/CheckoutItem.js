@@ -28,9 +28,11 @@ class CheckoutItem extends React.Component{
 
     render(){
         let {product, cartItem, removeFromCart} = this.props;
+        let variantImage = cartItem.variant.image || product.image;
 
         return(
             <div>
+                <img src={variantImage} alt={product.title} style={{width: "100px"}} />
                 <p>{product.title} ({cartItem.variant.name})</p>
                 <p>
                     [{cartItem.count}] {this.props.currency}{cartItem.variant.price} 
