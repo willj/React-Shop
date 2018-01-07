@@ -31,7 +31,7 @@ class Product extends React.Component{
         let variantImage = this.state.selectedVariant.image || product.image;
 
         return (
-            <div className="product">
+            <section className="product">
                 <div className="product-image">
                     <img src={variantImage} alt={product.title} />
                 </div>
@@ -51,7 +51,7 @@ class Product extends React.Component{
 
                     <p>{product.desc}</p>
                 </div>
-            </div>
+            </section>
         );
     }
 }

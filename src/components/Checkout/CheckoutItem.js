@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 class CheckoutItem extends React.Component{
 
@@ -31,16 +32,28 @@ class CheckoutItem extends React.Component{
         let variantImage = cartItem.variant.image || product.image;
 
         return(
-            <div>
-                <img src={variantImage} alt={product.title} style={{width: "100px"}} />
-                <p>{product.title} ({cartItem.variant.name})</p>
-                <p>
-                    [{cartItem.count}] {this.props.currency}{cartItem.variant.price} 
-                    [Total <span className="checkout-item-total">{this.props.currency}{this.itemTotal()}</span>]
-                </p>
-                <button onClick={this.addOne} className="add-one-button">+</button>
-                <button onClick={this.removeOne} className="remove-one-button">-</button>
-                <button onClick={removeFromCart.bind(this, cartItem.variant.id)} className="remove-from-cart-button">Remove</button>
+            <div className="checkout-item">
+                <img src={variantImage} alt={product.title} className="checkout-item-image" />
+                
+                <div className="checkout-col-product">    
+                    <p>
+                        <Link to={"/products/" + product.slug}>{product.title} ({cartItem.variant.name})</Link>
+                    </p>
+                    <p>{this.props.currency}{cartItem.variant.price} </p>
+                </div>
+
+                <div className="checkout-col-quantity-total">
+                    <div className="checkout-col-quantity">
+                        <p>Quantity: {cartItem.count}</p>
+                        <button onClick={this.addOne} className="add-one-button">+</button>
+                        <button onClick={this.removeOne} className="remove-one-button">-</button>
+                        <button onClick={removeFromCart.bind(this, cartItem.variant.id)} className="remove-from-cart-button">Remove</button>
+                    </div>
+
+                    <div className="checkout-col-total">
+                        <p>Total: <span className="checkout-item-total">{this.props.currency}{this.itemTotal()}</span></p>
+                    </div>
+                </div>
             </div>
         );
     }

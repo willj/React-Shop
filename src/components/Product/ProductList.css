@@ -1,6 +1,7 @@
 .product-list {
     margin: 0 auto;
     max-width: 960px;
+    overflow: auto;
 }
 
 .product-list-item {

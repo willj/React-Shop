@@ -10,9 +10,9 @@ const ProductList = ({products, addToCart, category}) => {
         <ProductListItem product={product} key={index} /> );
 
     return (
-        <div className="product-list">
+        <section className="product-list">
             {productList}
-        </div>
+        </section>
     );
 };
 

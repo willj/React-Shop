@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CheckoutItem from './CheckoutItem';
 import { FindProduct } from '../Product/ProductHelpers';
+import './Checkout.css';
 
 class Checkout extends React.Component{
 
@@ -15,26 +16,22 @@ class Checkout extends React.Component{
 
     render(){
         return (
-            <div>            
-                <div>
-                    {
-                        Object.values(this.props.cartItems).map((cartItem, index) => {
-                            return <CheckoutItem cartItem={cartItem} key={index} 
-                                        product={FindProduct(this.props.products, cartItem.slug)} 
-                                        currency={this.props.currency} 
-                                        removeFromCart={this.props.removeFromCart}
-                                        updateCartQuantity={this.props.updateCartQuantity} />;
-                        })
-                    }
-                </div>
+            <section className="checkout">            
+                <h2>Checkout</h2>
+                {
+                    Object.values(this.props.cartItems).map((cartItem, index) => {
+                        return <CheckoutItem cartItem={cartItem} key={index} 
+                                    product={FindProduct(this.props.products, cartItem.slug)} 
+                                    currency={this.props.currency} 
+                                    removeFromCart={this.props.removeFromCart}
+                                    updateCartQuantity={this.props.updateCartQuantity} />;
+                    })
+                }
 
-                <p>
-                    Checkoot total: 
-                    <span className="checkout-total">
-                        {this.props.currency}{this.calculateTotal()}
-                    </span>
+                <p className="checkout-total-wrapper">
+                    Checkout total: <span className="checkout-total">{this.props.currency}{this.calculateTotal()}</span>
                 </p>
-            </div>
+            </section>
         );
     }
 }

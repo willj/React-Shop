@@ -30,7 +30,7 @@ describe('<Product />', () => {
 
         const wrapper = shallow(<Product product={dummyProduct} addToCart={addToCart} />);
 
-        wrapper.find(".add-to-cart-btn").simulate('click');
+        wrapper.find(".buy-button").simulate('click');
 
         expect(addToCart).toHaveBeenCalledTimes(1);
         expect(addToCart).toHaveBeenCalledWith(expectedProductShape);
@@ -71,13 +71,13 @@ describe('<Product />', () => {
         
         const wrapper = shallow(<Product product={dummyProduct} addToCart={addToCart} />);
 
-        wrapper.find(".add-to-cart-btn").simulate('click');
+        wrapper.find(".buy-button").simulate('click');
 
         expect(addToCart).toHaveBeenCalledTimes(1);
         expect(addToCart).toHaveBeenLastCalledWith(variant1);
 
         wrapper.find('select').simulate('change', { target: { value: "salted-caramel-2" }});
-        wrapper.find(".add-to-cart-btn").simulate('click');
+        wrapper.find(".buy-button").simulate('click');
 
         expect(addToCart).toHaveBeenCalledTimes(2);
         expect(addToCart).toHaveBeenLastCalledWith(variant2);
