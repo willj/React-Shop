@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ProductListItem from './ProductListItem';
 import './ProductList.css';
 
-const ProductList = ({products, addToCart, category}) => {
+const ProductList = ({products, category}) => {
     const productList = products.filter((product) => {
         return (category === undefined || product.categories.includes(category));
     }).map( (product,  index) => 
@@ -20,6 +20,5 @@ export default ProductList;
 
 ProductList.propTypes = {
     products: PropTypes.array.isRequired,
-    addToCart: PropTypes.func.isRequired,
     category: PropTypes.string
 }

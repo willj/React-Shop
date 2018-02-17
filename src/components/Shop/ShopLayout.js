@@ -15,7 +15,7 @@ const ShopLayout = ({products, cartItems, currency, addToCart, removeFromCart, u
                 <main>
                     <Switch>
                         <Route exact path="/">
-                            <ProductList products={products} addToCart={addToCart} />
+                            <ProductList products={products} />
                         </Route>
 
                         <Route path="/products/:slug" render={({match}) => 
@@ -27,12 +27,11 @@ const ShopLayout = ({products, cartItems, currency, addToCart, removeFromCart, u
                         </Route>
 
                         <Route path="/:category" render={({match}) => 
-                            <ProductList products={products} 
-                                addToCart={addToCart} category={match.params.category} /> } />
+                            <ProductList products={products} category={match.params.category} /> } />
                     </Switch>
                 </main>
             </div>
-            </BrowserRouter>
+        </BrowserRouter>
     );
 };
 
