@@ -6,7 +6,7 @@ export default function cartReducer(state = initialState.cartItems, action){
         case ADD_TO_CART:
             return addToCartReducer(state, action.productSlug, action.variant);
         case REMOVE_FROM_CART:
-            return removeFromCartReducer();
+            return removeFromCartReducer(state, action.variantId);
         case UPDATE_CART_QUANTITY:
             return updateCartQuantityReducer(state, action.variantId, action.quantity);
         default:

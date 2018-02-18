@@ -41,165 +41,268 @@ describe('cartReducer', () => {
         expect(cartState).toEqual({});
     });
 
-    it('adds a product to an empty cart when ADD_TO_CART is dispatched', () => {
+    describe('ADD_TO_CART', () => {
 
-        let productSlug = dummyProducts[0].slug;
-        let variant = dummyProducts[0].variants[0];
+        it('adds a product to an empty cart', () => {
 
-        let action = { 
-            type: ADD_TO_CART, 
-            productSlug: productSlug,
-            variant: variant
-        };
+            let productSlug = dummyProducts[0].slug;
+            let variant = dummyProducts[0].variants[0];
+    
+            let action = { 
+                type: ADD_TO_CART, 
+                productSlug: productSlug,
+                variant: variant
+            };
+    
+            let expectedCartItem = {
+                count: 1, 
+                slug: productSlug, 
+                variant: variant
+            };
+    
+            let state = cartReducer({}, action);
+    
+            expect(state[variant.id]).toEqual(expectedCartItem);
+        });
 
-        let expectedCartItem = {
-            count: 1, 
-            slug: productSlug, 
-            variant: variant
-        };
+        it('updates the quantity when dispatched for a product variant already in the cart', () =>{
+            let productSlug = dummyProducts[0].slug;
+            let variant = dummyProducts[0].variants[0];
+    
+            let action = { 
+                type: ADD_TO_CART, 
+                productSlug: productSlug,
+                variant: variant
+            };
+    
+            let expectedCartItem = {
+                count: 1, 
+                slug: productSlug, 
+                variant: variant
+            };
+    
+            let state = cartReducer({}, action);
+    
+            expect(state[variant.id]).toEqual(expectedCartItem);
+    
+            state = cartReducer(state, action);
+    
+            expect(state[variant.id].slug).toBe(productSlug);
+            expect(state[variant.id].variant).toEqual(variant);
+            expect(state[variant.id].count).toBe(2);
+        });
 
-        let state = cartReducer({}, action);
+        it('Adds 2 distinct cartItems to the cart when dispatched for 2 variants of the same product ', () => {
+            let productSlug1 = dummyProducts[0].slug;
+            let variant1 = dummyProducts[0].variants[0];
+    
+            let productSlug2 = dummyProducts[0].slug;
+            let variant2 = dummyProducts[0].variants[1];
+    
+            let action1 = { 
+                type: ADD_TO_CART, 
+                productSlug: productSlug1,
+                variant: variant1
+            };
+    
+            let action2 = { 
+                type: ADD_TO_CART, 
+                productSlug: productSlug1,
+                variant: variant1
+            };
+    
+            let action3 = { 
+                type: ADD_TO_CART, 
+                productSlug: productSlug2,
+                variant: variant2
+            };
+    
+            let state = cartReducer({}, action1);
+            state = cartReducer(state, action2);
+            state = cartReducer(state, action3);
+    
+            expect(state).toHaveProperty(variant1.id);
+            expect(state[variant1.id].count).toBe(2);
+            
+            expect(state).toHaveProperty(variant2.id);
+            expect(state[variant2.id].count).toBe(1);
+        });
 
-        expect(state[variant.id]).toEqual(expectedCartItem);
     });
 
-    it('updates the quantity when ADD_TO_CART is dispatched for a product variant already in the cart', () =>{
-        let productSlug = dummyProducts[0].slug;
-        let variant = dummyProducts[0].variants[0];
+    describe('REMOVE_FROM_CART', () => {
+        it('removes a matching item from the cart', () => {
+            let productSlug = dummyProducts[0].slug;
+            let variant1 = dummyProducts[0].variants[0];
+            let variant2 = dummyProducts[0].variants[1];
+    
+            let addAction1 = { 
+                type: ADD_TO_CART, 
+                productSlug: productSlug,
+                variant: variant1
+            };
+    
+            let addAction2 = { 
+                type: ADD_TO_CART, 
+                productSlug: productSlug,
+                variant: variant2
+            };
+    
+            let removeAction = {
+                type: REMOVE_FROM_CART,
+                variantId: variant1.id
+            };
+    
+            let state = cartReducer({}, addAction1);
+            state = cartReducer(state, addAction2);
+    
+            expect(state).toHaveProperty(variant1.id);
+            expect(state).toHaveProperty(variant2.id);
+    
+            state = cartReducer(state, removeAction);
+    
+            expect(state).not.toHaveProperty(variant1.id);
+            expect(state).toHaveProperty(variant2.id);
+        });
 
-        let action = { 
-            type: ADD_TO_CART, 
-            productSlug: productSlug,
-            variant: variant
-        };
+        it('does not remove an item from the cart if no match', () => {
+            let productSlug = dummyProducts[0].slug;
+            let variant1 = dummyProducts[0].variants[0];
+            let variant2 = dummyProducts[0].variants[1];
+    
+            let addAction = { 
+                type: ADD_TO_CART, 
+                productSlug: productSlug,
+                variant: variant2
+            };
+    
+            let removeAction = {
+                type: REMOVE_FROM_CART,
+                variantId: variant1.id
+            };
+    
+            let state = cartReducer({}, addAction);
 
-        let expectedCartItem = {
-            count: 1, 
-            slug: productSlug, 
-            variant: variant
-        };
+            expect(Object.keys(state).length).toBe(1);
+            expect(state).toHaveProperty(variant2.id);
+    
+            state = cartReducer(state, removeAction);
+    
+            expect(Object.keys(state).length).toBe(1);
+            expect(state).toHaveProperty(variant2.id);
+        });
 
-        let state = cartReducer({}, action);
-
-        expect(state[variant.id]).toEqual(expectedCartItem);
-
-        state = cartReducer(state, action);
-
-        expect(state[variant.id].slug).toBe(productSlug);
-        expect(state[variant.id].variant).toEqual(variant);
-        expect(state[variant.id].count).toBe(2);
     });
 
-    it('Adds 2 distinct products to the cart when ADD_TO_CART is dispatched for 2 different products', () => {
-        let productSlug1 = dummyProducts[0].slug;
-        let variant1 = dummyProducts[0].variants[0];
+    describe('UPDATE_CART_QUANTITY', () => {
 
-        let productSlug2 = dummyProducts[0].slug;
-        let variant2 = dummyProducts[0].variants[1];
+        it('sets the quantity of a cartItem', () => {
+            let productSlug = dummyProducts[1].slug;
+            let variant = dummyProducts[1].variants[0];
+    
+            let addAction = { 
+                type: ADD_TO_CART, 
+                productSlug: productSlug,
+                variant: variant
+            };
+    
+            let updateAction = {
+                type: UPDATE_CART_QUANTITY,
+                variantId: variant.id,
+                quantity: 23
+            };
+    
+            let state = cartReducer({}, addAction);
+    
+            expect(state).toHaveProperty(variant.id);
+            expect(state[variant.id].count).toBe(1);
+    
+            state = cartReducer(state, updateAction);
+    
+            expect(state[variant.id].count).toBe(23);
+        });
 
-        let action1 = { 
-            type: ADD_TO_CART, 
-            productSlug: productSlug1,
-            variant: variant1
-        };
+        it('removes a product when given a quantity of 0', () => {
+            let productSlug = dummyProducts[1].slug;
+            let variant = dummyProducts[1].variants[0];
+    
+            let addAction = { 
+                type: ADD_TO_CART, 
+                productSlug: productSlug,
+                variant: variant
+            };
+    
+            let updateAction = {
+                type: UPDATE_CART_QUANTITY,
+                variantId: variant.id,
+                quantity: 0
+            };
+    
+            let state = cartReducer({}, addAction);
+    
+            expect(state).toHaveProperty(variant.id);
+            expect(state[variant.id].count).toBe(1);
+    
+            state = cartReducer(state, updateAction);
+    
+            expect(state).toEqual({});
+        });
 
-        let action2 = { 
-            type: ADD_TO_CART, 
-            productSlug: productSlug1,
-            variant: variant1
-        };
+        it('removes a product when given a quantity of -1', () => {
+            let productSlug = dummyProducts[1].slug;
+            let variant = dummyProducts[1].variants[0];
+    
+            let addAction = { 
+                type: ADD_TO_CART, 
+                productSlug: productSlug,
+                variant: variant
+            };
+    
+            let updateAction = {
+                type: UPDATE_CART_QUANTITY,
+                variantId: variant.id,
+                quantity: -1
+            };
+    
+            let state = cartReducer({}, addAction);
+    
+            expect(state).toHaveProperty(variant.id);
+            expect(state[variant.id].count).toBe(1);
+    
+            state = cartReducer(state, updateAction);
+    
+            expect(state).toEqual({});
+        });
 
-        let action3 = { 
-            type: ADD_TO_CART, 
-            productSlug: productSlug2,
-            variant: variant2
-        };
+        it('has no effect when the variant is not in the cart', () => {
+            let productSlug = dummyProducts[1].slug;
+            let variant1 = dummyProducts[1].variants[0];
+            let variant2 = dummyProducts[1].variants[1];
+    
+            let addAction = { 
+                type: ADD_TO_CART, 
+                productSlug: productSlug,
+                variant: variant1
+            };
+    
+            let updateAction = {
+                type: UPDATE_CART_QUANTITY,
+                variantId: variant2.id,
+                quantity: 23
+            };
+    
+            let state = cartReducer({}, addAction);
+    
+            expect(state).toHaveProperty(variant1.id);
+            expect(state[variant1.id].count).toBe(1);
+    
+            state = cartReducer(state, updateAction);
+    
+            expect(state).toHaveProperty(variant1.id);
+            expect(state[variant1.id].count).toBe(1);
+            expect(state).not.toHaveProperty(variant2.id);
+        });
 
-        let state = cartReducer({}, action1);
-        state = cartReducer(state, action2);
-        state = cartReducer(state, action3);
-
-        expect(state).toHaveProperty(variant1.id);
-        expect(state[variant1.id].count).toBe(2);
-        
-        expect(state).toHaveProperty(variant2.id);
-        expect(state[variant2.id].count).toBe(1);
-    });
-
-    it('the product is removed from the cart when REMOVE_FROM_CART is dispatched', () => {
-        let productSlug = dummyProducts[0].slug;
-        let variant = dummyProducts[0].variants[0];
-
-        let addAction = { 
-            type: ADD_TO_CART, 
-            productSlug: productSlug,
-            variant: variant
-        };
-
-        let removeAction = {
-            type: REMOVE_FROM_CART,
-            variantId: variant.id
-        };
-
-        let state = cartReducer({}, addAction);
-
-        expect(state).toHaveProperty(variant.id);
-
-        state = cartReducer(state, removeAction);
-
-        expect(state).toEqual({});
-    });
-
-    it('the quantity is changed when UPDATE_CART_QUANTITY is dispatched', () => {
-        let productSlug = dummyProducts[1].slug;
-        let variant = dummyProducts[1].variants[0];
-
-        let addAction = { 
-            type: ADD_TO_CART, 
-            productSlug: productSlug,
-            variant: variant
-        };
-
-        let updateAction = {
-            type: UPDATE_CART_QUANTITY,
-            variantId: variant.id,
-            quantity: 23
-        };
-
-        let state = cartReducer({}, addAction);
-
-        expect(state).toHaveProperty(variant.id);
-        expect(state[variant.id].count).toBe(1);
-
-        state = cartReducer(state, updateAction);
-
-        expect(state[variant.id].count).toBe(23);
-    });
-
-    it('removes the product when UPDATE_CART_QUANTITY is dispatched with a quantity of 0', () => {
-        let productSlug = dummyProducts[1].slug;
-        let variant = dummyProducts[1].variants[0];
-
-        let addAction = { 
-            type: ADD_TO_CART, 
-            productSlug: productSlug,
-            variant: variant
-        };
-
-        let updateAction = {
-            type: UPDATE_CART_QUANTITY,
-            variantId: variant.id,
-            quantity: 0
-        };
-
-        let state = cartReducer({}, addAction);
-
-        expect(state).toHaveProperty(variant.id);
-        expect(state[variant.id].count).toBe(1);
-
-        state = cartReducer(state, updateAction);
-
-        expect(state).toEqual({});
     });
 
 });
