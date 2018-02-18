@@ -1,4 +1,3 @@
-import { combineReducers } from 'redux';
 import { ADD_TO_CART, REMOVE_FROM_CART, UPDATE_CART_QUANTITY } from '../actions/actionTypes';
 import initialState from '../store/initialState';
 
