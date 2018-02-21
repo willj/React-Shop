@@ -1,3 +1,3 @@
 # React shop
 
-A shop example built with React https://willj.github.io/React-Shop/
+A shop example built with React & Redux https://willj.github.io/React-Shop/
