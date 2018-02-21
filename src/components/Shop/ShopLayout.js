@@ -1,33 +1,31 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import ProductList from '../Product/ProductList';
+import ProductListPage from '../Product/ProductListPage';
 import Header from '../Header/Header';
 import ProductPage from '../Product/ProductPage';
-import Checkout from '../Checkout/Checkout';
+import CheckoutPage from '../Checkout/CheckoutPage';
 
-const ShopLayout = ({products, cartItems, currency, addToCart, removeFromCart, updateCartQuantity}) => {
+const ShopLayout = () => {
     return (
         <BrowserRouter basename={process.env.PUBLIC_URL}>
             <div className="App">
-                <Header cartItems={cartItems} products={products} />
+                <Header />
 
                 <main>
                     <Switch>
                         <Route exact path="/">
-                            <ProductList products={products} />
+                            <ProductListPage />
                         </Route>
 
                         <Route path="/products/:slug" render={({match}) => 
-                            <ProductPage products={products} addToCart={addToCart} match={match} />} />
+                            <ProductPage slug={match.params.slug} />} />
 
                         <Route path="/checkout">
-                            <Checkout products={products} cartItems={cartItems} currency={currency}
-                                removeFromCart={removeFromCart} updateCartQuantity={updateCartQuantity} />
+                            <CheckoutPage />
                         </Route>
 
                         <Route path="/:category" render={({match}) => 
-                            <ProductList products={products} category={match.params.category} /> } />
+                            <ProductListPage category={match.params.category} /> } />
                     </Switch>
                 </main>
             </div>
@@ -36,12 +34,3 @@ const ShopLayout = ({products, cartItems, currency, addToCart, removeFromCart, u
 };
 
 export default ShopLayout;
-
-ShopLayout.propTypes = {
-    products: PropTypes.array.isRequired,
-    cartItems: PropTypes.object.isRequired,
-    currency: PropTypes.string.isRequired,
-    addToCart: PropTypes.func.isRequired,
-    removeFromCart: PropTypes.func.isRequired,
-    updateCartQuantity: PropTypes.func.isRequired
-};

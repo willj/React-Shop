@@ -4,6 +4,7 @@ import CartIcon from './CartIcon';
 import CategoryMenu from './CategoryMenu';
 import { Link } from 'react-router-dom';
 import './Header.css';
+import { connect } from 'react-redux';
 
 const Header = ({cartItems, products}) => {
     return (
@@ -22,9 +23,20 @@ const Header = ({cartItems, products}) => {
     );
 }
 
-export default Header;
-
 Header.propTypes = {
     cartItems: PropTypes.object.isRequired,
     products: PropTypes.array.isRequired
 }
+
+function mapStateToProps(state){
+    return {
+        cartItems: state.cartItems,
+        products: state.products
+    };
+}
+
+function mapDispatchToProps(dispatch){
+    return {};
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

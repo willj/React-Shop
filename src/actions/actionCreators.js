@@ -18,6 +18,7 @@ export function removeFromCart(variantId){
 export function updateCartQuantity(variantId, quantity){
     return {
         type: UPDATE_CART_QUANTITY,
+        variantId,
         quantity
     }
 }

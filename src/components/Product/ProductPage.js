@@ -1,18 +1,27 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import Product from './Product';
 import { FindProduct } from './ProductHelpers';
+import { addToCart } from '../../actions/actionCreators';
+import { connect } from 'react-redux';
 
-const ProductPage = ({match, products, addToCart}) => {
-    return (products.length > 0) 
-        ? <Product product={FindProduct(products, match.params.slug)} addToCart={addToCart} />
-        : <span>Loading...</span>
+function mapStateToProps(state, ownProps){
+    return {
+        product: FindProduct(state.products, ownProps.slug)
+    };
 }
 
-export default ProductPage;
+function mapDispatchToProps(dispatch){
+    return {
+        addToCart: (slug, variant) => {
+            dispatch(addToCart(slug, variant));
+        }
+    }
+}
+
+const ProductPage = connect(mapStateToProps, mapDispatchToProps)(Product);
 
 ProductPage.propTypes = {
-    products: PropTypes.array.isRequired,
-    match: PropTypes.object.isRequired,
-    addToCart: PropTypes.func.isRequired
+    slug: PropTypes.string.isRequired
 };
+
+export default  ProductPage;

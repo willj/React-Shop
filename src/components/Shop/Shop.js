@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ShopLayout from './ShopLayout';
+import Axios from 'axios';
 
 class Shop extends React.Component{
 
@@ -8,63 +9,25 @@ class Shop extends React.Component{
         super(props);
 
         this.state = {
-            cartItems: {}
-        }
-
-        this.addToCart = this.addToCart.bind(this);
-        this.removeFromCart = this.removeFromCart.bind(this);
-        this.updateCartQuantity = this.updateCartQuantity.bind(this);
+            hasError: false
+        };
     }
-
-    addToCart(product){
-        this.setState((prevState, props) => {
-            let cart = Object.assign({}, prevState.cartItems);
-            if (product.variant.id in cart) {
-                cart[product.variant.id].count += 1;
-            } else {
-                cart[product.variant.id] = { 
-                    count: 1, 
-                    slug: product.slug, 
-                    variant: product.variant
-                };
-            }
-
-            return { cartItems: cart };
-        });
-    }
-
-    removeFromCart(variantId){
-        this.setState((prevState, props) => {
-            let cart = Object.assign({}, prevState.cartItems);
-            delete cart[variantId];
-
-            return { cartItems: cart };
-        });
-    }
-
-    updateCartQuantity(variantId, newCount){
-
-        if (newCount < 1) return this.removeFromCart(variantId);
-
-        this.setState((prevState, props) => {
-            let cart = Object.assign({}, prevState.cartItems);
-            
-            if (cart[variantId]){
-                cart[variantId].count = newCount;
-            }
-
-            return { cartItems: cart };
+    
+    componentDidMount(){
+        Axios.get(process.env.PUBLIC_URL + "/products.json")
+        .then(response => {
+            this.props.productsLoaded(response.data.products);
+            this.props.setCurrency(response.data.currency);
+        }).catch(err => {
+            this.setState({ hasError: true });
         });
     }
 
     render(){
-        return (
-            <ShopLayout products={this.props.products} 
-                cartItems={this.state.cartItems} currency={this.props.currency} 
-                addToCart={this.addToCart}
-                removeFromCart={this.removeFromCart}
-                updateCartQuantity={this.updateCartQuantity} />
-        );
+        if (this.state.hasError) return <h1>an error occured</h1>;
+        if (this.props.products.length === 0) return <span>Loading...</span>;
+
+        return <ShopLayout />;
     }
 }
 
@@ -72,5 +35,6 @@ export default Shop;
 
 Shop.propTypes = {
     products: PropTypes.array.isRequired,
-    currency: PropTypes.string.isRequired
+    productsLoaded: PropTypes.func.isRequired,
+    setCurrency: PropTypes.func.isRequired
 };

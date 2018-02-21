@@ -20,10 +20,7 @@ class Product extends React.Component{
     }
 
     addToCart(){
-        this.props.addToCart({ 
-            slug: this.props.product.slug, 
-            variant: this.state.selectedVariant
-        });
+        this.props.addToCart(this.props.product.slug, this.state.selectedVariant);
     }
 
     render(){

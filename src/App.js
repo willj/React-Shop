@@ -1,40 +1,19 @@
-import React from 'react';
-import Axios from 'axios';
 import Shop from './components/Shop/Shop';
-
 import './App.css';
+import { connect } from 'react-redux';
+import { productsLoaded, setCurrency } from './actions/actionCreators';
 
-class App extends React.Component {
-
-    constructor(props){
-        super(props);
-
-        this.state = {
-            products: [],
-            currency: "",
-            hasError: false
-        };
-    }
-
-    componentDidMount(){
-        Axios.get(process.env.PUBLIC_URL + "/products.json")
-        .then(response => {
-            this.setState({ 
-                products: response.data.products, 
-                currency: response.data.currency
-            });
-        }).catch(err => {
-            this.setState({ hasError: true });
-        });
-    }
-
-    render() {
-        if (this.state.hasError) return <h1>an error occured</h1>;
-
-        return (
-            <Shop products={this.state.products} currency={this.state.currency} />
-        );
-    }
+function mapStateToProps(state){
+    return {
+        products: state.products
+    };
 }
 
-export default App;
+function mapDispatchToProps(dispatch){
+    return {
+        productsLoaded: products => dispatch(productsLoaded(products)),
+        setCurrency: currency => dispatch(setCurrency(currency))
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Shop);

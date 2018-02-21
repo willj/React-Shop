@@ -1,167 +1,86 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+
+// Mock remote calls
+jest.mock('axios');
+import Axios from 'axios';
+
 import Shop from './Shop';
 
-describe('<Shop />', () => {
+const dummyProducts = [
+    { slug: "product-1" },
+    { slug: "product-2" },
+    { slug: "product-3" }
+];
 
-    const dummyProduct = {
-        slug: 'test-product',
-        variants: [
-            { "id": "test-product-v1", "price": "1", "name": "v1" },
-            { "id": "test-product-v2", "price": "3", "name": "v2" }
-        ]
-    };
+describe('<Shop />', () => { 
 
-    const productVariantToAdd1 = {
-        slug: dummyProduct.slug,
-        variant: dummyProduct.variants[0]
-    };
-
-    const productVariantToAdd2 = {
-        slug: dummyProduct.slug,
-        variant: dummyProduct.variants[1]
-    };
-
-    describe('addToCart', () => {
-
-        it('adds a product to an empty cart', () => {
-            const wrapper = shallow(<Shop products={[]} currency="£" />);
-
-            wrapper.instance().addToCart(productVariantToAdd1);
-
-            expect(Object.keys(wrapper.state().cartItems).length).toBe(1);
-            expect(wrapper.state().cartItems).toHaveProperty('test-product-v1');
-            expect(wrapper.state().cartItems['test-product-v1']).toHaveProperty('count', 1);
+    // do this beforeEach so the call count resets
+    beforeEach(() => {
+        Axios.get = jest.fn((url, config) => {
+            return new Promise((resolve, reject) => {
+                resolve({
+                    data: {
+                        currency: "£", 
+                        products: dummyProducts
+                    }
+                });
+            });
         });
-
-        it('increases the count if the same product is added multiple times', () => {
-            const wrapper = shallow(<Shop products={[]} currency="£" />);
-
-            wrapper.instance().addToCart(productVariantToAdd1);
-
-            expect(Object.keys(wrapper.state().cartItems).length).toBe(1);
-            expect(wrapper.state().cartItems).toHaveProperty('test-product-v1');
-            expect(wrapper.state().cartItems['test-product-v1']).toHaveProperty('count', 1);   
-
-            wrapper.instance().addToCart(productVariantToAdd1);
-            wrapper.instance().addToCart(productVariantToAdd1);
-
-            expect(Object.keys(wrapper.state().cartItems).length).toBe(1);
-            expect(wrapper.state().cartItems['test-product-v1']).toHaveProperty('count', 3);   
-        });
-
-        it('stores different variants of the same product as seperate cartItems', () => {
-            const wrapper = shallow(<Shop products={[]} currency="£" />);
-
-            wrapper.instance().addToCart(productVariantToAdd1);
-            wrapper.instance().addToCart(productVariantToAdd2);
-            wrapper.instance().addToCart(productVariantToAdd2);
-
-            expect(Object.keys(wrapper.state().cartItems).length).toBe(2);
-            expect(wrapper.state().cartItems).toHaveProperty('test-product-v1');
-            expect(wrapper.state().cartItems).toHaveProperty('test-product-v2');
-            expect(wrapper.state().cartItems['test-product-v1']).toHaveProperty('count', 1);
-            expect(wrapper.state().cartItems['test-product-v2']).toHaveProperty('count', 2);
-        });
-
     });
 
-    describe('removeFromCart', () => {
+    it('loads products in componentDidMount and calls productsLoaded and setCurrency on success', () => {
         
-        it('removes an item from the cart', () => {
-            const wrapper = shallow(<Shop products={[]} currency="£" />);
+        const productsLoaded = jest.fn();
+        const setCurrency = jest.fn();
 
-            wrapper.instance().addToCart(productVariantToAdd1);
-            wrapper.instance().addToCart(productVariantToAdd2);            
+        const wrapper = shallow(
+            <Shop products={[]} 
+                productsLoaded={productsLoaded} setCurrency={setCurrency} />
+        );
 
-            expect(Object.keys(wrapper.state().cartItems).length).toBe(2);
-            expect(wrapper.state().cartItems).toHaveProperty('test-product-v1');
-            expect(wrapper.state().cartItems).toHaveProperty('test-product-v2');
+        // Axios.get() is called again (so don't count calls)
+        // and it's CalledLastWith no args, so you can't check that either
 
-            wrapper.instance().removeFromCart(productVariantToAdd1.variant.id);
-
-            expect(Object.keys(wrapper.state().cartItems).length).toBe(1);
-            expect(wrapper.state().cartItems).toHaveProperty('test-product-v2');
-            expect(wrapper.state().cartItems).not.toHaveProperty('test-product-v1');
-        });
-
-        it('does not remove from the cart if no match', () => {
-            const wrapper = shallow(<Shop products={[]} currency="£" />);
-
-            wrapper.instance().addToCart(productVariantToAdd1);         
-
-            expect(Object.keys(wrapper.state().cartItems).length).toBe(1);
-            expect(wrapper.state().cartItems).toHaveProperty('test-product-v1');
-
-            wrapper.instance().removeFromCart(productVariantToAdd2.variant.id);
-
-            expect(Object.keys(wrapper.state().cartItems).length).toBe(1);
-            expect(wrapper.state().cartItems).toHaveProperty('test-product-v1');
+        return Axios.get().then(() => {
+            expect(Axios.get).toHaveBeenCalledWith("/products.json");
+            expect(productsLoaded).toHaveBeenCalledWith(dummyProducts);
+            expect(setCurrency).toHaveBeenCalledWith("£");
         });
 
     });
 
-    describe('updateCartQuantity', () => {
-
-        it('sets the quantity of a cartItem', () => {
-            const wrapper = shallow(<Shop products={[]} currency="£" />);
-
-            wrapper.instance().addToCart(productVariantToAdd1);         
-
-            expect(Object.keys(wrapper.state().cartItems).length).toBe(1);
-            expect(wrapper.state().cartItems).toHaveProperty('test-product-v1');
-            expect(wrapper.state().cartItems['test-product-v1'].count).toBe(1);
-
-            wrapper.instance().updateCartQuantity('test-product-v1', 4);
-
-            expect(wrapper.state().cartItems['test-product-v1'].count).toBe(4);
+    it('Shows an error screen if products.json cannot be loaded', () => {
+        Axios.get = jest.fn((url, config) => {
+            return new Promise((resolve, reject) => {
+                reject();
+            });
         });
 
-        it('removes the item when given a quantity of 0', () => {
-            const wrapper = shallow(<Shop products={[]} currency="£" />);
+        const wrapper = shallow(<Shop products={[]} 
+            productsLoaded={() => {}} setCurrency={() => {}} />);
 
-            wrapper.instance().addToCart(productVariantToAdd1);         
-
-            expect(Object.keys(wrapper.state().cartItems).length).toBe(1);
-            expect(wrapper.state().cartItems).toHaveProperty('test-product-v1');
-            expect(wrapper.state().cartItems['test-product-v1'].count).toBe(1);
-
-            wrapper.instance().updateCartQuantity('test-product-v1', 0);
-
-            expect(Object.keys(wrapper.state().cartItems).length).toBe(0);
-            expect(wrapper.state().cartItems).not.toHaveProperty('test-product-v1');
-
+        // even though you only want the catch(), you need a then() for this to work
+        return Axios.get().then(() => {}).catch(() => {
+            expect(Axios.get).toHaveBeenCalledWith("/products.json");
+            expect(wrapper.instance().props.products).toHaveLength(0);
+            expect(wrapper.state().hasError).toBe(true);
+            expect(wrapper.update().contains("an error occured")).toBe(true);
         });
 
-        it('removes the item when given a quantity of -1', () => {
-            const wrapper = shallow(<Shop products={[]} currency="£" />);
+    });
 
-            wrapper.instance().addToCart(productVariantToAdd1);         
-
-            expect(Object.keys(wrapper.state().cartItems).length).toBe(1);
-            expect(wrapper.state().cartItems).toHaveProperty('test-product-v1');
-            expect(wrapper.state().cartItems['test-product-v1'].count).toBe(1);
-
-            wrapper.instance().updateCartQuantity('test-product-v1', -1);
-
-            expect(Object.keys(wrapper.state().cartItems).length).toBe(0);
-            expect(wrapper.state().cartItems).not.toHaveProperty('test-product-v1');
+    it('shows a loading message when there are no products', () =>{
+        Axios.get = jest.fn((url, config) => {
+            return new Promise((resolve, reject) => {});
         });
 
-        it('has no effect when the variant is not in the cart', () => {
-            const wrapper = shallow(<Shop products={[]} currency="£" />);
+        const wrapper = shallow(<Shop products={[]} 
+            productsLoaded={() => {}} setCurrency={() => {}} />);
 
-            wrapper.instance().addToCart(productVariantToAdd1);         
-
-            expect(Object.keys(wrapper.state().cartItems).length).toBe(1);
-            expect(wrapper.state().cartItems).toHaveProperty('test-product-v1');
-            
-            wrapper.instance().updateCartQuantity('test-product-v2', 4);
-
-            expect(Object.keys(wrapper.state().cartItems).length).toBe(1);
-            expect(wrapper.state().cartItems).not.toHaveProperty('test-product-v2');
-        });
-
+        expect(Axios.get).toHaveBeenCalledWith("/products.json");
+        expect(wrapper.state().hasError).toBe(false);
+        expect(wrapper.contains(<span>Loading...</span>)).toBe(true);
     });
 
 });
