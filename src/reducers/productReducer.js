@@ -4,7 +4,7 @@ import initialState from '../store/initialState';
 export default function productReducer(state = initialState.products, action){
     switch(action.type){
         case PRODUCTS_LOADED:
-            return products;
+            return action.products;
         default:
         return state;
     }
