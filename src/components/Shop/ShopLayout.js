@@ -9,14 +9,12 @@ const ShopLayout = () => {
     return (
         <BrowserRouter basename={process.env.PUBLIC_URL}>
             <div className="App">
-                <Header />
+                {/* Wrap Header in a Route to ensure it's updated for each URL change
+                without this the activeLinkClass does not work */}
+                <Route component={Header} />
 
                 <main>
                     <Switch>
-                        <Route exact path="/">
-                            <ProductListPage />
-                        </Route>
-
                         <Route path="/products/:slug" render={({match}) => 
                             <ProductPage slug={match.params.slug} />} />
 
@@ -24,7 +22,7 @@ const ShopLayout = () => {
                             <CheckoutPage />
                         </Route>
 
-                        <Route path="/:category" render={({match}) => 
+                        <Route path="/:category?" render={({match}) => 
                             <ProductListPage category={match.params.category} /> } />
                     </Switch>
                 </main>
