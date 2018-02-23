@@ -1,5 +1,5 @@
 import { SET_CURRENCY } from '../actions/actionTypes';
-import initialState from '../store/initialState';
+import initialState from './initialState';
 
 export default function currencyReducer(state = initialState.currency, action){
     switch(action.type){

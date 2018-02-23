@@ -1,5 +1,5 @@
 import { PRODUCTS_LOADED } from '../actions/actionTypes';
-import initialState from '../store/initialState';
+import initialState from './initialState';
 
 export default function productReducer(state = initialState.products, action){
     switch(action.type){

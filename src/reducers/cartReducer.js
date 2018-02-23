@@ -1,5 +1,5 @@
 import { ADD_TO_CART, REMOVE_FROM_CART, UPDATE_CART_QUANTITY } from '../actions/actionTypes';
-import initialState from '../store/initialState';
+import initialState from './initialState';
 
 export default function cartReducer(state = initialState.cartItems, action){
     switch(action.type){
