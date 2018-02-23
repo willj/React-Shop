@@ -35,10 +35,6 @@ function mapStateToProps(state){
     };
 }
 
-function mapDispatchToProps(dispatch){
-    return {};
-}
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));
+export default withRouter(connect(mapStateToProps)(Header));
 
 /* withRouter passes router props in, and ensures it's updated for each URL change without this the activeLinkClass does not work */
