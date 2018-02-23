@@ -9,9 +9,7 @@ const ShopLayout = () => {
     return (
         <BrowserRouter basename={process.env.PUBLIC_URL}>
             <div className="App">
-                {/* Wrap Header in a Route to ensure it's updated for each URL change
-                without this the activeLinkClass does not work */}
-                <Route component={Header} />
+                <Header />
 
                 <main>
                     <Switch>

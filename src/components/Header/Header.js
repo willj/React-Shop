@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CartIcon from './CartIcon';
 import CategoryMenu from './CategoryMenu';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import './Header.css';
 import { connect } from 'react-redux';
 
@@ -39,4 +39,6 @@ function mapDispatchToProps(dispatch){
     return {};
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));
+
+/* withRouter passes router props in, and ensures it's updated for each URL change without this the activeLinkClass does not work */
