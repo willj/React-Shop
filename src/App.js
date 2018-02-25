@@ -1,7 +1,7 @@
 import Shop from './components/Shop/Shop';
 import './App.css';
 import { connect } from 'react-redux';
-import { productsLoaded, setCurrency } from './actions/actionCreators';
+import { loadProducts } from './actions/productActions';
 
 function mapStateToProps(state){
     return {
@@ -9,11 +9,8 @@ function mapStateToProps(state){
     };
 }
 
-function mapDispatchToProps(dispatch){
-    return {
-        productsLoaded: products => dispatch(productsLoaded(products)),
-        setCurrency: currency => dispatch(setCurrency(currency))
-    };
+const mapDispatchToProps = {
+    loadProducts
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Shop);

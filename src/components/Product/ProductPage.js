@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import Product from './Product';
 import { FindProduct } from './ProductHelpers';
-import { addToCart } from '../../actions/actionCreators';
+import { addToCart } from '../../actions/cartActions';
 import { connect } from 'react-redux';
 
 function mapStateToProps(state, ownProps){

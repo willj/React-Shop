@@ -1,4 +1,4 @@
-import { ADD_TO_CART, REMOVE_FROM_CART, UPDATE_CART_QUANTITY, PRODUCTS_LOADED, SET_CURRENCY } from './actionTypes';
+import { ADD_TO_CART, REMOVE_FROM_CART, UPDATE_CART_QUANTITY } from './actionTypes';
 
 export function addToCart(productSlug, variant){
     return {
@@ -20,19 +20,5 @@ export function updateCartQuantity(variantId, quantity){
         type: UPDATE_CART_QUANTITY,
         variantId,
         quantity
-    }
-}
-
-export function productsLoaded(products){
-    return {
-        type: PRODUCTS_LOADED,
-        products
-    }
-}
-
-export function setCurrency(currency){
-    return {
-        type: SET_CURRENCY,
-        currency
     }
 }

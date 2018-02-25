@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import Checkout from './Checkout';
-import { removeFromCart, updateCartQuantity } from '../../actions/actionCreators';
+import { removeFromCart, updateCartQuantity } from '../../actions/cartActions';
 
 function mapStateToProps(state){
     return {
