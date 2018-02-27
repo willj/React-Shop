@@ -9,35 +9,26 @@ describe('<Shop />', () => {
         const loadProducts = jest.fn();
 
         const wrapper = shallow(
-            <Shop products={[]} loadProducts={loadProducts} />
+            <Shop products={[]} loadProducts={loadProducts} loadingError={false} />
         );
 
         expect(loadProducts).toHaveBeenCalledTimes(1);
     });
 
-    // it('Shows an error screen if products.json cannot be loaded', () => {
-    //     Axios.get = jest.fn((url, config) => {
-    //         return new Promise((resolve, reject) => {
-    //             reject();
-    //         });
-    //     });
+    it('Shows an error screen if loadingError is true', () => {
 
-    //     const wrapper = shallow(<Shop products={[]} 
-    //         productsLoaded={() => {}} setCurrency={() => {}} />);
+        const wrapper = shallow(<Shop products={[]} 
+            loadProducts={() => {}} loadingError={false} />);
 
-    //     // even though you only want the catch(), you need a then() for this to work
-    //     return Axios.get().then(() => {}).catch(() => {
-    //         expect(Axios.get).toHaveBeenCalledWith("/products.json");
-    //         expect(wrapper.instance().props.products).toHaveLength(0);
-    //         expect(wrapper.state().hasError).toBe(true);
-    //         expect(wrapper.update().contains("an error occured")).toBe(true);
-    //     });
-
-    // });
+        expect(wrapper.contains(<h1>an error occured</h1>)).toBe(false);
+        
+        wrapper.setProps({ loadingError: true });
+        expect(wrapper.contains(<h1>an error occured</h1>)).toBe(true);
+    });
 
     it('shows a loading message when there are no products', () =>{
         
-        const wrapper = shallow(<Shop products={[]} loadProducts={() => {}} />);
+        const wrapper = shallow(<Shop products={[]} loadProducts={() => {}} loadingError={false} />);
 
         expect(wrapper.contains(<span>Loading...</span>)).toBe(true);
     });

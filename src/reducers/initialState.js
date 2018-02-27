@@ -1,7 +1,8 @@
 const initialState = {
     products: [],
     cartItems: {},
-    currency: ""
+    currency: "",
+    loadingError: false
 };
 
 export default initialState;

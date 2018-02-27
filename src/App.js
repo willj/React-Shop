@@ -5,7 +5,8 @@ import { loadProducts } from './actions/productActions';
 
 function mapStateToProps(state){
     return {
-        products: state.products
+        products: state.products,
+        loadingError: state.loadingError
     };
 }
 

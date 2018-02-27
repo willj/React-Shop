@@ -30,7 +30,7 @@ describe('productActions', () => {
         it('loads products and dispatches productsLoaded and setCurrency actions', () => {
             
             const dispatch = jest.fn();
-            const thunk = productActions.loadProducts();
+            const thunk = productActions.loadProducts("/products.json");
             const loadAction = thunk(dispatch);
 
             const expectedProductLoadedAction = productActions.productsLoaded(dummyProducts);
@@ -56,7 +56,7 @@ describe('productActions', () => {
             });
 
             const dispatch = jest.fn();
-            const thunk = productActions.loadProducts();
+            const thunk = productActions.loadProducts("/products.json");
             const loadAction = thunk(dispatch);
 
             // even though you only want the catch(), you need a then() for this to work

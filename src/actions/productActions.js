@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { ADD_TO_CART, REMOVE_FROM_CART, UPDATE_CART_QUANTITY, PRODUCTS_LOADED, SET_CURRENCY, PRODUCT_LOADING_ERROR } from './actionTypes';
+import { ADD_TO_CART, REMOVE_FROM_CART, UPDATE_CART_QUANTITY, PRODUCTS_LOADED, SET_CURRENCY, PRODUCT_LOADING_ERROR, SET_LOADING_STATUS } from './actionTypes';
 
 export function addToCart(productSlug, variant){
     return {
@@ -24,9 +24,9 @@ export function updateCartQuantity(variantId, quantity){
     }
 }
 
-export function loadProducts(){
+export function loadProducts(productsUrl){
     return dispatch => {
-        Axios.get(process.env.PUBLIC_URL + "/products.json")
+        Axios.get(productsUrl)
         .then(response => {
             dispatch(productsLoaded(response.data.products));
             dispatch(setCurrency(response.data.currency));
@@ -55,4 +55,3 @@ export function loadingError(){
         type: PRODUCT_LOADING_ERROR
     }
 }
-
