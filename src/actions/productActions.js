@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { ADD_TO_CART, REMOVE_FROM_CART, UPDATE_CART_QUANTITY, PRODUCTS_LOADED, SET_CURRENCY, PRODUCT_LOADING_ERROR, SET_LOADING_STATUS } from './actionTypes';
+import { ADD_TO_CART, REMOVE_FROM_CART, UPDATE_CART_QUANTITY, PRODUCTS_LOADED, SET_CURRENCY, PRODUCT_LOADING_ERROR } from './actionTypes';
 
 export function addToCart(productSlug, variant){
     return {
